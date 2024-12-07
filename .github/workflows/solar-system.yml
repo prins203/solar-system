@@ -10,7 +10,7 @@ on:
 env:
   MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-  MONGO_URI: "mongodb+srv://devconnectordbcluster.dr1oc5n.mongodb.net/gitactions"
+  MONGO_URI: ${{ secrets.MONGO_URI }}
 jobs:
     unit-testing:
         name: Unit Testing
