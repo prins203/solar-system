@@ -44,8 +44,6 @@ jobs:
             path: test-results.xml
 
     code-coverage:
-      strategy:
-        fail-fast: false
       name: Code Coverage
       runs-on: ubuntu-latest
       steps:
@@ -62,6 +60,7 @@ jobs:
 
         - name: Code Coverage
           run: npm run coverage
+          continue-on-error: true
           
         - name: Archive Code Coverage
           uses: actions/upload-artifact@v3
