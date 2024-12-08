@@ -13,18 +13,15 @@ app.use(express.static(path.join(__dirname, '/')));
 app.use(cors())
 
 mongoose.connect(process.env.MONGO_URI, {
-    dbName: process.env.MONGO_DB_NAME,
     user: process.env.MONGO_USERNAME,
     pass: process.env.MONGO_PASSWORD,
     useNewUrlParser: true,
     useUnifiedTopology: true
-}, function(err) {
-    if (err) {
-        console.log("error!! " + err)
-    } else {
-      //  console.log("MongoDB Connection Successful")
-    }
-})
+}).then(() => {
+    console.log("MongoDB Connection Successful");
+}).catch((err) => {
+    console.log("error!! " + err);
+});
 
 var Schema = mongoose.Schema;
 
@@ -44,14 +41,16 @@ app.post('/planet',   function(req, res) {
    // console.log("Received Planet ID " + req.body.id)
     planetModel.findOne({
         id: req.body.id
-    }, function(err, planetData) {
-        if (err) {
-            alert("Ooops, We only have 9 planets and a sun. Select a number from 0 - 9")
-            res.send("Error in Planet Data")
+    }).then(planetData => {
+        if (!planetData) {
+            res.status(404).send("Planet not found");
         } else {
             res.send(planetData);
         }
-    })
+    }).catch(err => {
+        console.error("Error in Planet Data", err);
+        res.status(500).send("Error in Planet Data");
+    });
 })
 
 app.get('/',   async (req, res) => {

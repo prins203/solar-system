@@ -10,7 +10,6 @@ on:
 env:
   MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-  MONGO_DB_NAME: ${{ vars.MONGO_DB_NAME }}
   MONGO_URI: ${{ secrets.MONGO_URI }}
 jobs:
     unit-testing:
